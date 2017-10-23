@@ -18,9 +18,9 @@
 	return _instance;
 }
 
-- (void)setProxy:(NSString *)ipaddr port:(NSUInteger)port {
+- (void)setProxy:(NSString *)ipaddr port:(NSUInteger)port proxsupport:(NSUInteger)proxsupport {
 
-		SCPreferencesRef prefRef = SCPreferencesCreate(NULL, CFSTR("test_proxy"), NULL);
+		SCPreferencesRef prefRef = SCPreferencesCreate(NULL, CFSTR("appknox_proxy"), NULL);
 
 		SCPreferencesLock(prefRef, true);
 
@@ -32,16 +32,17 @@
 	   	if (currentSet) {
 
 	   		NSDictionary *currentSetServices = currentSet[cfs2nss(kSCCompNetwork)][cfs2nss(kSCCompService)];
-	   		DDLog(@"current set services: %@", currentSetServices);
+			//  		DDLog(@"current set services: %@", currentSetServices);
 
 		    NSDictionary *services = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
-		    DDLog(@"services = %@", services);
+		    // DDLog(@"services = %@", services);
 
 		    NSString *wifiServiceKey = nil;
 		    for (NSString *key in currentSetServices) {
 		   		NSDictionary *service = services[key];
 		   		NSString *name = service[cfs2nss(kSCPropUserDefinedName)];
 		   		DDLog(@"network service name: %@", name);
+				DDLog(@"network key name: %@", key);
 		   		if (service && [@"Wi-Fi" isEqualToString: name]) {
 		   			wifiServiceKey = key;
 		   			break;
@@ -50,7 +51,7 @@
 
 		    if (wifiServiceKey) {
 		    	DDLog(@"Find target servcie: %@", wifiServiceKey);
-			 	NSData *data = 
+			 	NSData *data =
 				[NSPropertyListSerialization dataWithPropertyList:services
 		                                             format:NSPropertyListBinaryFormat_v1_0
 		                                             options:0
@@ -61,10 +62,10 @@
 		                                            format:NULL
 		                                  			 error:nil];
 			    NSMutableDictionary *proxies = nservices[wifiServiceKey][(__bridge NSString *)kSCEntNetProxies];
-			    [proxies setObject:@(1) forKey:cfs2nss(kSCPropNetProxiesHTTPEnable)];
+			    [proxies setObject:@(proxsupport) forKey:cfs2nss(kSCPropNetProxiesHTTPEnable)];
 			   	[proxies setObject:ipaddr forKey:cfs2nss(kSCPropNetProxiesHTTPProxy)];
 			   	[proxies setObject:@(port) forKey:cfs2nss(kSCPropNetProxiesHTTPPort)];
-			   	[proxies setObject:@(1) forKey:cfs2nss(kSCPropNetProxiesHTTPSEnable)];
+			   	[proxies setObject:@(proxsupport) forKey:cfs2nss(kSCPropNetProxiesHTTPSEnable)];
 			   	[proxies setObject:ipaddr forKey:cfs2nss(kSCPropNetProxiesHTTPSProxy)];
 			   	[proxies setObject:@(port) forKey:cfs2nss(kSCPropNetProxiesHTTPSPort)];
 			    SCPreferencesSetValue(prefRef, kSCPrefNetworkServices, (__bridge CFPropertyListRef)nservices);
