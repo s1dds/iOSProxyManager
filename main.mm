@@ -6,9 +6,9 @@ int main(int argc, char **argv, char **envp) {
 	if (argc > 1) {
 		NSString *host = [NSString stringWithUTF8String:argv[1]];
 		NSString *port = [NSString stringWithUTF8String:argv[2]];
-		[proxy setProxy:host port:[port intValue] proxsupport:1];
+		[proxy setProxy:host port:[port intValue] shouldEnableProxy:YES];
 	} else {
-		[proxy setProxy:@"" port:0 proxsupport:0];
+		[proxy setProxy:@"" port:0 shouldEnableProxy:NO];
 	}
 	return 0;
 }
