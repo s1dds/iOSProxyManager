@@ -1,10 +1,10 @@
 Package: com.appknox.proxy
 Name: appknox_proxy
 Depends:
-Version: 0.0.3
+Version: 0.0.4
 Architecture: iphoneos-arm
-Description: Appknox Proxy!!
-Maintainer: subho007
-Author: subho007
+Description: Update iOS System Proxy
+Maintainer: Appknox <engineering@appknox.com>
+Author: Appknox <engineering@appknox.com>
 Section: System
-Tag: role::hacker
+Tag: purpose::console, role::hacker
