@@ -1,10 +1,16 @@
-ARCHS=arm64 armv7 armv7s
-TARGET=iphone:11.2:10.0
+ARCHS=arm64
+TARGET=iphone:16.5:14.0
 ADDITIONAL_OBJCFLAGS = -fobjc-arc
 
 export TARGET_CODESIGN_FLAGS="-Ssign.plist"
 
 include $(THEOS)/makefiles/common.mk
+
+ifeq ($(THEOS_PACKAGE_SCHEME),rootless)
+	PACKAGE_BUILDNAME := rootless
+else
+	PACKAGE_BUILDNAME := rootful
+endif
 
 TOOL_NAME = appknox_proxy
 appknox_proxy_FILES = main.mm WiFiProxy.m

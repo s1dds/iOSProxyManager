@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "WiFiProxy.h"
+#import <rootless.h>
 
 int main(int argc, char **argv, char **envp) {
 	WiFiProxy *proxy = [WiFiProxy sharedInstance];

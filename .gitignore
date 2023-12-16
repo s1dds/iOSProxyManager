@@ -64,3 +64,4 @@ iOSInjectionProject/
 .theos
 *.deb
 .DS_Store
+packages

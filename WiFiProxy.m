@@ -3,6 +3,7 @@
 
 #import "WiFiProxy.h"
 #import "SCNetworkHeader.h"
+#import <rootless.h>
 
 #define DDLog(s,...) NSLog(@"******TESTPROXY****** %s:%d %@",__func__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__]);
 
@@ -18,7 +19,7 @@
 	return _instance;
 }
 
-- (void)setProxy:(NSString *)ipaddr port:(NSUInteger)port shouldEnableProxy:(BOOL)shouldEnableProxy {
+- (void)setProxy:(NSString *)ipaddr port:(NSUInteger)port shouldEnableProxy:(int)shouldEnableProxy {
 
 		SCPreferencesRef prefRef = SCPreferencesCreate(NULL, CFSTR("appknox_proxy"), NULL);
 

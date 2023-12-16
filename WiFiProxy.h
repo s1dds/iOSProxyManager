@@ -4,6 +4,6 @@
 
 + (instancetype)sharedInstance;
 
-- (void)setProxy:(NSString *)ipaddr port:(NSUInteger)port shouldEnableProxy:(BOOL)shouldEnableProxy;
+- (void)setProxy:(NSString *)ipaddr port:(NSUInteger)port shouldEnableProxy:(int)shouldEnableProxy;
 
 @end
